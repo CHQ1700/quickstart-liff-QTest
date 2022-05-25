@@ -42,7 +42,21 @@ async function main() {
     btnLogIn.style.display = 'block';
     btnLogOut.style.display = 'block';
   }
+
+  // Check if Log in or not
+  if (!liff.isInClient()) {
+    if (liff.isLoggedIn()) {
+      btnLogIn.style.display = 'none';
+      btnLogOut.style.display = 'block';
+    } else {
+      btnLogIn.style.display = 'block';
+      btnLogOut.style.display = 'none';
+    }
+  } else {
+    getUserProfile();
+  }
 }
+
 async function getUserProfile() {
   const profile = await liff.getProfile();
   pictureUrl.src = profile.pictureUrl;
@@ -51,10 +65,7 @@ async function getUserProfile() {
   displayName.innerHTML = '<b>displayName:</b> ' + profile.displayName;
   email.innerHTML = '<b>email:</b>' + liff.getDecodedIDToken().email;
 }
-async function getUserProfile() {
-  // ...
-  email.innerHTML = '<b>email:</b> ' + liff.getDecodedIDToken().email;
-}
+
 btnLogIn.onclick = () => {
   liff.login();
 };
