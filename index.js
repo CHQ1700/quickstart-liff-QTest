@@ -187,7 +187,7 @@ async function getFriendship() {
   const friend = await liff.getFriendship();
   if (!friend.friendFlag) {
     msg =
-      '<a href="https://line.me/R/ti/p/@BOT-ID">Follow our chatbot here!</a>';
+      '<a href="https://line.me/R/ti/p/@252qsagt">Follow our chatbot here!</a>';
   }
   friendShip.innerHTML = msg;
 }
