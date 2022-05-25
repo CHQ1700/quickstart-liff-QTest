@@ -36,5 +36,32 @@ async function main() {
       body.style.backgroundColor = '#eeeeee';
       break;
   }
+  getUserProfile();
+
+  if (!liff.isInClient()) {
+    btnLogIn.style.display = 'block';
+    btnLogOut.style.display = 'block';
+  }
 }
+async function getUserProfile() {
+  const profile = await liff.getProfile();
+  pictureUrl.src = profile.pictureUrl;
+  userId.innerHTML = '<b>userId:</b> ' + profile.userId;
+  statusMessage.innerHTML = '<b>statusMessage:</b> ' + profile.statusMessage;
+  displayName.innerHTML = '<b>displayName:</b> ' + profile.displayName;
+  email.innerHTML = '<b>email:</b>' + liff.getDecodedIDToken().email;
+}
+async function getUserProfile() {
+  // ...
+  email.innerHTML = '<b>email:</b> ' + liff.getDecodedIDToken().email;
+}
+btnLogIn.onclick = () => {
+  liff.login();
+};
+
+btnLogOut.onclick = () => {
+  liff.logout();
+  window.location.reload();
+};
+
 main();
