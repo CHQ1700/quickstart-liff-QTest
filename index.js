@@ -65,16 +65,19 @@ async function main() {
 
   if (!liff.isInClient()) {
     if (liff.isLoggedIn()) {
-      btnShare.style.display = "block"
+      btnShare.style.display = 'block';
       // ...
     } else {
       // ...
     }
   } else {
-    btnShare.style.display = "block"
+    btnShare.style.display = 'block';
     // ...
   }
-  
+
+  if (liff.isInClient() && liff.getOS() === 'android') {
+    btnScanCode.style.display = 'block';
+  }
 }
 
 async function getUserProfile() {
@@ -117,16 +120,24 @@ btnSend.onclick = () => {
 async function shareMsg() {
   await liff.shareTargetPicker([
     {
-      type: "image",
-      originalContentUrl: "https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg",
-      previewImageUrl: "https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg"
-    }
-  ])
+      type: 'image',
+      originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
+      previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
+    },
+  ]);
 }
 
 btnShare.onclick = () => {
-  shareMsg()
+  shareMsg();
+};
+
+async function scanCode() {
+  const result = await liff.scanCode();
+  code.innerHTML = '<b>Code: </b>' + result.value;
 }
 
+btnScanCode.onclick = () => {
+  scanCode();
+};
 
 main();
