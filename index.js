@@ -78,6 +78,17 @@ async function main() {
   if (liff.isInClient() && liff.getOS() === 'android') {
     btnScanCode.style.display = 'block';
   }
+
+  if (!liff.isInClient()) {
+    if (liff.isLoggedIn()) {
+      // ...
+    } else {
+      // ...
+    }
+  } else {
+    // ...
+  }
+  btnOpenWindow.style.display = 'block';
 }
 
 async function getUserProfile() {
@@ -138,6 +149,13 @@ async function scanCode() {
 
 btnScanCode.onclick = () => {
   scanCode();
+};
+
+btnOpenWindow.onclick = () => {
+  liff.openWindow({
+    url: window.location.href,
+    external: true,
+  });
 };
 
 main();
