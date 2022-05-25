@@ -89,6 +89,18 @@ async function main() {
     // ...
   }
   btnOpenWindow.style.display = 'block';
+
+  if (!liff.isInClient()) {
+    if (liff.isLoggedIn()) {
+      // ...
+      getFriendship();
+    } else {
+      // ...
+    }
+  } else {
+    // ...
+    getFriendship();
+  }
 }
 
 async function getUserProfile() {
@@ -157,5 +169,27 @@ btnOpenWindow.onclick = () => {
     external: true,
   });
 };
+
+async function sendMsg() {
+  if (liff.getContext().type !== 'none') {
+    await liff.sendMessages([
+      {
+        type: 'text',
+        text: 'This message was sent by sendMessages()',
+      },
+    ]);
+    liff.closeWindow();
+  }
+}
+
+async function getFriendship() {
+  let msg = 'Hooray! You and our chatbot are friend.';
+  const friend = await liff.getFriendship();
+  if (!friend.friendFlag) {
+    msg =
+      '<a href="https://line.me/R/ti/p/@BOT-ID">Follow our chatbot here!</a>';
+  }
+  friendShip.innerHTML = msg;
+}
 
 main();
