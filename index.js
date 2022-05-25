@@ -55,6 +55,13 @@ async function main() {
   } else {
     getUserProfile();
   }
+
+  if (!liff.isInClient()) {
+    // Block message
+  } else {
+    btnSend.style.display = 'block';
+    getUserProfile();
+  }
 }
 
 async function getUserProfile() {
@@ -73,6 +80,25 @@ btnLogIn.onclick = () => {
 btnLogOut.onclick = () => {
   liff.logout();
   window.location.reload();
+};
+
+async function sendMsg() {
+  if (
+    liff.getContext().type !== 'none' &&
+    liff.getContext().type !== 'external'
+  ) {
+    await liff.sendMessages([
+      {
+        type: 'text',
+        text: 'This message was sent by sendMessages()',
+      },
+    ]);
+    alert('Message sent');
+  }
+}
+
+btnSend.onclick = () => {
+  sendMsg();
 };
 
 main();
